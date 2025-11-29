@@ -1,13 +1,24 @@
 import { type ReactNode, useEffect, useState } from 'react'
 
+import type { AuthContextType } from '@/lib'
 import { supabase } from '@/lib/supabaseClient'
-import type { AuthContextType } from '@/types'
 
 import { AuthContext } from './AuthContext'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AuthContextType['session'] | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const logOut = async () => {
+    try {
+      setLoading(true)
+      await supabase.auth.signOut()
+    } catch (err) {
+      console.error('Logout failed:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     // Load session on app start
@@ -29,9 +40,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         session,
         user: session?.user ?? null,
+        loading,
+        logOut,
       }}
     >
-      {!loading && children}
+      {children}
     </AuthContext>
   )
 }

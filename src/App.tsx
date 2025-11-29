@@ -3,17 +3,26 @@ import { Navigate, Route, Routes } from 'react-router'
 import { Dashboard, Folder, LoginPage } from '@/components'
 import { useAuth } from '@/context'
 
+import { Spinner } from './components/ui/spinner'
+import { PATHS } from './lib'
+
 function App() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+
+  if (loading) return <Spinner fullScreen />
 
   return (
-    <div className="min-w-screen min-h-screen bg-neutral-200">
+    <div className="bg-linear-to-tr from-slate-200 to-slate-300">
       <Routes>
         {/* Public Route */}
-        <Route index element={!user ? <LoginPage /> : <Navigate to="/dashboard" replace />} />
+        <Route index element={!user ? <LoginPage /> : <Navigate to={PATHS.dashboard} replace />} />
 
         {/* Protected Route */}
-        <Route path="dashboard" element={user ? <Dashboard /> : <Navigate to="/" replace />}>
+        <Route
+          path="dashboard"
+          element={user ? <Dashboard /> : <Navigate to={PATHS.root} replace />}
+        >
+          <Route index element={<Folder />} />
           <Route path=":folderId" element={<Folder />} />
         </Route>
 

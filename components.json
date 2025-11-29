@@ -6,8 +6,8 @@
   "tailwind": {
     "config": "",
     "css": "src/index.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
+    "baseColor": "slate",
+    "cssVariables": false,
     "prefix": ""
   },
   "iconLibrary": "lucide",
@@ -17,8 +17,7 @@
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks",
-    "context": "@/context",
-    "types": "@/types"
+    "context": "@/context"
   },
   "registries": {}
 }
