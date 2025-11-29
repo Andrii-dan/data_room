@@ -32,19 +32,22 @@ export default defineConfig([
       'no-debugger': 'warn',
 
       // Import sorting
-      'simple-import-sort/imports': 'warn',
-      'simple-import-sort/exports': 'warn',
-      'unused-imports/no-unused-imports': 'warn',
-
-      // Import order rules
-      'import/order': [
-        'warn',
+      'simple-import-sort/imports': [
+        'error',
         {
-          groups: [['builtin', 'external', 'internal']],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
+          groups: [
+            ['^\\u0000'], // side effect imports
+            ['^react', '^@?\\w'], // external packages
+            ['^@/'], // internal aliases
+            ['^\\.'], // relative imports
+          ],
         },
       ],
+      'simple-import-sort/exports': 'error',
+      'unused-imports/no-unused-imports': 'warn',
+
+      // Turn off conflicting import/order
+      'import/order': 'off',
     },
     settings: {
       'import/resolver': {

@@ -1,33 +1,28 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react'
 
-import { AuthContext } from './AuthContext';
+import { supabase } from '@/lib/supabaseClient'
+import type { AuthContextType } from '@/types'
 
-import type { AuthContextType } from '@/types';
-
-import { supabase } from '@/lib/supabaseClient';
+import { AuthContext } from './AuthContext'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<AuthContextType['session'] | null>(
-    null,
-  );
-  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<AuthContextType['session'] | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // Load session on app start
     supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
+      setSession(data.session)
+      setLoading(false)
+    })
 
     // Listen for sign-in/sign-out changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      },
-    );
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
 
-    return () => authListener.subscription.unsubscribe();
-  }, []);
+    return () => authListener.subscription.unsubscribe()
+  }, [])
 
   return (
     <AuthContext
@@ -38,5 +33,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     >
       {!loading && children}
     </AuthContext>
-  );
+  )
 }
