@@ -11,18 +11,14 @@ function Spinner({ className, fullScreen = false, ...props }: SpinnerProps) {
     <Loader2Icon
       role="status"
       aria-label="Loading"
-      className={cn('animate-spin text-sky-700', fullScreen ? 'size-10' : 'size-4', className)}
+      className={cn('animate-spin text-primary', fullScreen ? 'size-12' : 'size-4', className)}
       {...props}
     />
   )
 
   if (!fullScreen) return spinner
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white/40 backdrop-blur-sm z-50">
-      {spinner}
-    </div>
-  )
+  return <div className="fixed inset-0 flex items-center justify-center z-50">{spinner}</div>
 }
 
 export { Spinner }

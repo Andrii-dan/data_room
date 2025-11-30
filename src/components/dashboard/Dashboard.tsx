@@ -4,11 +4,11 @@ import { Header } from './Header'
 
 export function Dashboard() {
   return (
-    <div className="min-h-screen w-screen overflow-hidden">
+    <div className="min-h-screen w-screen overflow-hidden bg-pattern-dot">
       <Header />
-      <div className="flex flex-col gap-4 p-6">
-        <div className="h-16 bg-neutral-100 rounded shadow">TEST</div>
-        <div className="h-[calc(100vh-190px)] bg-neutral-100 rounded shadow overflow-y-scroll">
+      <div className="flex flex-col gap-4 p-8">
+        <div className="h-16 border-2 bg-slate-100/70 dark:bg-slate-700/80 rounded-md"></div>
+        <div className="border-2 h-[calc(100vh-200px)] bg-slate-100/70 dark:bg-slate-700/80 rounded-md overflow-y-scroll">
           <Outlet />
         </div>
       </div>

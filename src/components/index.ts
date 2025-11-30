@@ -1,3 +1,3 @@
 export * from './dashboard'
-export * from './Folder'
+export * from './data-room'
 export * from './LoginPage'

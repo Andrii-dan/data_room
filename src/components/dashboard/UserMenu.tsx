@@ -20,15 +20,15 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center gap-2 cursor-pointer p-1 rounded-full hover:bg-white/20">
-          <img src={avatar} alt={name} className="w-9 h-9 rounded-full p-1 bg-red-300/50" />
+        <div className="flex items-center gap-2 cursor-pointer  p-1 rounded-full hover:bg-white/5">
+          <img src={avatar} alt={name} className="w-9 h-9 rounded-full p-1 bg-primary/60" />
           <span className="hidden lg:block text-sm text-white/90">{name}</span>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 sm:w-80" align="end">
         <DropdownMenuLabel className="w-full flex flex-col items-center justify-center">
           <span className="text-base">{name}</span>
-          <span className="text-sm text-gray-500">{email}</span>
+          <span className="text-sm text-muted-foreground">{email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex justify-center cursor-pointer" onClick={logOut}>

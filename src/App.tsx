@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router'
 
-import { Dashboard, Folder, LoginPage } from '@/components'
+import { Dashboard, DataRoom, LoginPage } from '@/components'
 import { useAuth } from '@/context'
 
 import { Spinner } from './components/ui/spinner'
@@ -12,7 +12,7 @@ function App() {
   if (loading) return <Spinner fullScreen />
 
   return (
-    <div className="bg-linear-to-tr from-slate-200 to-slate-300">
+    <div className="bg-linear-to-tr from-slate-400 dark:from-slate-900 to-slate-300 dark:to-slate-800">
       <Routes>
         {/* Public Route */}
         <Route index element={!user ? <LoginPage /> : <Navigate to={PATHS.dashboard} replace />} />
@@ -22,8 +22,8 @@ function App() {
           path="dashboard"
           element={user ? <Dashboard /> : <Navigate to={PATHS.root} replace />}
         >
-          <Route index element={<Folder />} />
-          <Route path=":folderId" element={<Folder />} />
+          <Route index element={<DataRoom />} />
+          <Route path=":folderId" element={<DataRoom />} />
         </Route>
 
         {/* Fallback route */}
