@@ -1,7 +1,9 @@
 import { openDB } from 'idb'
 import { v4 as uuidv4 } from 'uuid'
 
-import type { FileItem, FolderItem } from '../types'
+import { getUniqueFileName } from '@/lib'
+import type { FileItem, FolderItem } from '@/lib/types'
+
 import { simulateDelay } from './simulateDelay'
 
 export const dbPromise = openDB('dataroom', 1, {
@@ -59,9 +61,14 @@ export const addFile = async (file: File, parentId: string | null = null) => {
   const db = await dbPromise
   await simulateDelay()
 
+  const allFiles: FileItem[] = await db.getAll('files')
+  const existingNames = allFiles.filter((f) => f.parentId === parentId).map((f) => f.name)
+
+  const uniqueName = getUniqueFileName(file.name, existingNames)
+
   const fileItem: FileItem = {
     id: uuidv4(),
-    name: file.name,
+    name: uniqueName,
     type: 'file',
     parentId,
     file,
