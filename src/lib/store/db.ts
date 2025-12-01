@@ -55,10 +55,23 @@ export const addFolder = async (folderName: string, parentId: string | null = nu
   return folder
 }
 
-export const addFile = async (file: FileItem) => {
+export const addFile = async (file: File, parentId: string | null = null) => {
   const db = await dbPromise
   await simulateDelay()
-  await db.put('files', file)
+
+  const fileItem: FileItem = {
+    id: uuidv4(),
+    name: file.name,
+    type: 'file',
+    parentId,
+    file,
+    fileType: file.type,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  }
+
+  await db.put('files', fileItem)
+  return fileItem
 }
 
 export const deleteItem = async (store: 'folders' | 'files', id: string) => {

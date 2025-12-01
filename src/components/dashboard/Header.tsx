@@ -28,7 +28,7 @@ export function Header() {
         <Shapes className="mx-0.5 text-amber-500 transition-transform duration-200 group-hover:-translate-y-1" />
         <span className="transition-transform duration-200 group-hover:translate-y-1">ROOM</span>
       </div>
-      <div className="flex items-center gap-2 xl:gap-4">
+      <div className="flex items-center gap-2">
         <Button size="icon-sm" className="rounded-full" variant="secondary" onClick={toggleTheme}>
           <SunMoon />
         </Button>

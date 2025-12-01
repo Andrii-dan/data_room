@@ -1,6 +1,6 @@
 import { mutationOptions, queryOptions } from '@tanstack/react-query'
 
-import { addFile, addFolder, deleteItem, fetchItems, type FileItem } from '@/lib'
+import { addFile, addFolder, deleteItem, fetchItems } from '@/lib'
 
 export const dataRoomKeys = {
   items: (parentId: string | null) => ['get-items', parentId],
@@ -22,7 +22,8 @@ export const createFolder = () =>
 export const uploadFile = () =>
   mutationOptions({
     mutationKey: ['upload-file'],
-    mutationFn: (file: FileItem) => addFile(file),
+    mutationFn: ({ file, parentId }: { file: File; parentId?: string | null }) =>
+      addFile(file, parentId),
   })
 
 export const removeItem = () =>

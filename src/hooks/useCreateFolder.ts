@@ -9,6 +9,7 @@ export const useCreateFolder = (parentId: string | null = null) => {
   return useMutation({
     ...createFolder(),
     onSuccess: () => {
+      toast.success('Folder created successfully!')
       qc.invalidateQueries({ queryKey: dataRoomKeys.items(parentId) })
     },
     onError: ({ message }) => toast.error(message),
