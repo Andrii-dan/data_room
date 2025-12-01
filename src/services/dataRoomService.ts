@@ -1,6 +1,6 @@
 import { mutationOptions, queryOptions } from '@tanstack/react-query'
 
-import { addFile, addFolder, deleteItem, fetchItems } from '@/lib'
+import { addFile, addFolder, deleteItem, fetchItems } from '@/store'
 
 export const dataRoomKeys = {
   items: (parentId: string | null) => ['get-items', parentId],
