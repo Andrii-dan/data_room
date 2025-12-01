@@ -69,6 +69,7 @@ export function UploadFile() {
               type="button"
               onClick={() => setFiles((prev) => prev.filter((el) => el.name !== file.name))}
               variant="ghost"
+              disabled={isUploading}
             >
               <X className="w-4 h-4" />
             </Button>

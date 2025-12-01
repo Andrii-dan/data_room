@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router'
 
+import { ActionsPanel } from './ActionsPanel'
 import { Header } from './Header'
 
 export function Dashboard() {
@@ -7,7 +8,7 @@ export function Dashboard() {
     <div className="min-h-screen w-screen overflow-hidden bg-pattern-dot">
       <Header />
       <div className="flex flex-col gap-4 p-8">
-        <div className="h-16 border-2 bg-slate-100/70 dark:bg-slate-700/80 rounded-md"></div>
+        <ActionsPanel />
         <div className="border-2 h-[calc(100vh-200px)] bg-slate-100/70 dark:bg-slate-700/80 rounded-md overflow-y-scroll">
           <Outlet />
         </div>
