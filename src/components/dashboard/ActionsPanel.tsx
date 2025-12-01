@@ -3,10 +3,10 @@ import { Home, Plus, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { useDialog } from '@/context'
-import { cn } from '@/lib'
+import { cn, formatFileSize, MAX_FILE_SIZE } from '@/lib'
 
 import { CreateFolder } from './CreateFolder'
-import { UploadFile } from './UploadFile'
+import { UploadFile } from './upload'
 
 export function ActionsPanel() {
   const { folderId } = useParams()
@@ -23,11 +23,12 @@ export function ActionsPanel() {
   const openUploadFileDialog = () =>
     openDialog({
       title: 'Upload File',
-      description: '', // TODO: Add Description with rules
+      description: `Choose one or more files. Each file cannot be larger than ${formatFileSize(MAX_FILE_SIZE)}.`, // TODO: Add Description with rules
       content: <UploadFile />,
     })
 
   const isRootFolder = !folderId
+
   return (
     <div
       className={cn(

@@ -32,7 +32,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
     <DialogContext value={{ openDialog, closeDialog }}>
       {children}
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeDialog()}>
-        <DialogContent>
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{dialogOptions?.title}</DialogTitle>
             <DialogDescription>{dialogOptions?.description}</DialogDescription>

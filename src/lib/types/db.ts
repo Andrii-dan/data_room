@@ -17,3 +17,8 @@ export interface FolderItem {
   createdAt: number
   updatedAt: number
 }
+
+export interface InvalidFile {
+  file: File
+  reason: string
+}
