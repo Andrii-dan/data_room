@@ -2,20 +2,37 @@ import './index.css'
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter } from 'react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { AuthProvider, ThemeProvider } from '@/context'
+import { AuthProvider, DialogProvider, ThemeProvider } from '@/context'
 
 import App from './App.tsx'
+
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <AuthProvider>
+            <DialogProvider>
+              <Toaster
+                toastOptions={{
+                  style: {
+                    background: 'var(--card)',
+                    color: 'var(--foreground)',
+                    minWidth: '320px',
+                  },
+                }}
+              />
+              <App />
+            </DialogProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,
 )
