@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import {
   Dialog,
@@ -15,18 +15,18 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
   const [dialogOptions, setDialogOptions] = useState<DialogOptions | null>(null)
   const [isOpen, setIsOpen] = useState(false)
 
-  const openDialog = (options: DialogOptions) => {
+  const openDialog = useCallback((options: DialogOptions) => {
     setDialogOptions(options)
     setIsOpen(true)
-  }
+  }, [])
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     // Optional callback
     dialogOptions?.onClose?.()
 
     setIsOpen(false)
     setDialogOptions(null)
-  }
+  }, [dialogOptions])
 
   return (
     <DialogContext value={{ openDialog, closeDialog }}>

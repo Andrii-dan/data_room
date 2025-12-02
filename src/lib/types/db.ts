@@ -1,3 +1,5 @@
+export type Store = 'folders' | 'files'
+
 export interface FileItem {
   id: string
   name: string

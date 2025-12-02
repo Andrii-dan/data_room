@@ -1,8 +1,8 @@
 import { openDB } from 'idb'
 import { v4 as uuidv4 } from 'uuid'
 
-import { getUniqueFileName } from '@/lib'
-import type { FileItem, FolderItem } from '@/lib/types'
+import { checkDuplicateName, getUniqueFileName } from '@/lib'
+import type { FileItem, FolderItem, Store } from '@/lib/types'
 
 import { simulateDelay } from './simulateDelay'
 
@@ -33,10 +33,7 @@ export const addFolder = async (folderName: string, parentId: string | null = nu
   const allFolders: FolderItem[] = await db.getAll('folders')
   const siblingFolders = allFolders.filter((f) => f.parentId === parentId)
 
-  // Check for duplicate name (case insensitive)
-  const exists = siblingFolders.some(
-    (f) => f.name.toLocaleLowerCase() === folderName.toLocaleLowerCase(),
-  )
+  const exists = checkDuplicateName(folderName, siblingFolders)
 
   if (exists) {
     throw new Error(
@@ -81,8 +78,35 @@ export const addFile = async (file: File, parentId: string | null = null) => {
   return fileItem
 }
 
-export const deleteItem = async (store: 'folders' | 'files', id: string) => {
+export const deleteItem = async (store: Store, id: string) => {
   await simulateDelay()
   const db = await dbPromise
   await db.delete(store, id)
+}
+
+export const renameItem = async (store: Store, id: string, newName: string) => {
+  const db = await dbPromise
+  await simulateDelay()
+
+  // Fetch the item to rename
+  const item = await db.get(store, id)
+  if (!item) throw new Error('Item not found')
+
+  // Fetch all items of the same type under the same parent
+  const allItems = await db.getAll(store)
+  const siblingItems = allItems.filter((i) => i.parentId === item.parentId && i.id !== id)
+
+  const exists = checkDuplicateName(newName, siblingItems)
+
+  if (exists) {
+    throw new Error(
+      `Oops! A ${store === 'folders' ? 'folder' : 'file'} named "${newName}" already exists here.`,
+    )
+  }
+
+  // Update the item's name and timestamp
+  const updatedItem = { ...item, name: newName, updatedAt: Date.now() }
+
+  await db.put(store, updatedItem)
+  return updatedItem
 }

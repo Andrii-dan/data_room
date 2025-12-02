@@ -11,7 +11,7 @@ export function CreateFolder({ parentId = null }: { parentId?: string | null }) 
   const { closeDialog } = useDialog()
   const { mutate, isPending } = useCreateFolder(parentId)
 
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     mutate(

@@ -1,3 +1,4 @@
+export * from './useChangeItemName'
 export * from './useCreateFolder'
 export * from './useDeleteItem'
 export * from './useGetItems'

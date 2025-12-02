@@ -20,11 +20,13 @@ createRoot(document.getElementById('root')!).render(
           <AuthProvider>
             <DialogProvider>
               <Toaster
+                position="top-right"
                 toastOptions={{
+                  duration: 5000,
                   style: {
                     background: 'var(--card)',
                     color: 'var(--foreground)',
-                    minWidth: '320px',
+                    minWidth: '350px',
                   },
                 }}
               />
