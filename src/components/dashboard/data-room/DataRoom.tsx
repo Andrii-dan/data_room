@@ -1,9 +1,10 @@
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router'
 import { ChevronLeft } from 'lucide-react'
 
 import { Spinner } from '@/components/ui/spinner'
 import { useGetItems } from '@/hooks'
-import { PATHS } from '@/lib'
+import { PATHS, setDocumentTitle } from '@/lib'
 
 import { FileCard } from './FileCard'
 import { FolderCard } from './FolderCard'
@@ -14,9 +15,13 @@ export function DataRoom() {
 
   const { isLoading, data } = useGetItems(folderId)
 
-  if (isLoading) return <Spinner fullScreen />
-
   const { folders = [], files = [], currentFolder } = data || {}
+
+  useEffect(() => {
+    setDocumentTitle(currentFolder?.name)
+  }, [currentFolder])
+
+  if (isLoading) return <Spinner fullScreen />
 
   return (
     <div className="h-full p-4">
