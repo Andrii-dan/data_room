@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { MdDriveFileRenameOutline } from 'react-icons/md'
-import { MoreHorizontalIcon } from 'lucide-react'
+import { CloudDownload, Eye, MoreHorizontalIcon } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -10,16 +10,34 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useDialog } from '@/context'
-import { type FileItem, type FolderItem } from '@/lib'
+import { downloadFile, type FileItem, type FolderItem, previewFile } from '@/lib'
 
 import { ChangeItemName } from './ChangeItemName'
 import { DeleteItem } from './DeleteItem'
 
-export function ItemActions({ item }: { item: FileItem | FolderItem }) {
+type Props = {
+  item: FileItem | FolderItem
+  fileUrl?: string | null
+  previewable?: boolean
+}
+
+export function ItemActions({ item, fileUrl, previewable = false }: Props) {
   const { openDialog } = useDialog()
 
   const actions = useMemo(
     () => [
+      {
+        type: 'Preview',
+        onClick: () => previewFile(fileUrl),
+        icon: <Eye className="text-sky-500" />,
+        isVisible: fileUrl && item.type === 'file' && previewable,
+      },
+      {
+        type: 'Download',
+        onClick: () => downloadFile(fileUrl ?? null, item.name),
+        icon: <CloudDownload className="text-gold-drop-500" />,
+        isVisible: fileUrl && item.type === 'file',
+      },
       {
         type: 'Rename',
         onClick: () =>
@@ -28,6 +46,7 @@ export function ItemActions({ item }: { item: FileItem | FolderItem }) {
             content: <ChangeItemName item={item} />,
           }),
         icon: <MdDriveFileRenameOutline className="text-sky-500" />,
+        isVisible: true,
       },
       {
         type: 'Delete',
@@ -37,9 +56,10 @@ export function ItemActions({ item }: { item: FileItem | FolderItem }) {
             content: <DeleteItem item={item} />,
           }),
         icon: <MdDelete className="text-destructive" />,
+        isVisible: true,
       },
     ],
-    [item, openDialog],
+    [item, fileUrl, previewable, openDialog],
   )
 
   return (
@@ -52,17 +72,20 @@ export function ItemActions({ item }: { item: FileItem | FolderItem }) {
           <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {actions.map(({ type, icon, onClick }) => (
-          <DropdownMenuItem
-            key={type}
-            className="flex items-center cursor-pointer"
-            onClick={onClick}
-          >
-            {icon}
-            <span>{type}</span>
-          </DropdownMenuItem>
-        ))}
+      <DropdownMenuContent align="start">
+        {actions.map(
+          ({ type, icon, isVisible, onClick }) =>
+            isVisible && (
+              <DropdownMenuItem
+                key={type}
+                className="flex items-center cursor-pointer"
+                onClick={onClick}
+              >
+                {icon}
+                <span>{type}</span>
+              </DropdownMenuItem>
+            ),
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

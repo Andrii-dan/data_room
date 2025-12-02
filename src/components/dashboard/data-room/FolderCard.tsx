@@ -15,8 +15,8 @@ export function FolderCard({ folder }: { folder: FolderItem }) {
     <div
       title="Double click to open."
       className={cn(
-        'shrink-0 w-32 h-32 hover:border border-dotted rounded-lg hover:bg-accent',
-        'flex flex-col items-center justify-center gap-1',
+        'shrink-0 w-28 md:w-32 h-28 md:h-32 hover:border border-dotted rounded-lg hover:bg-accent',
+        'flex flex-col items-center justify-center gap-1.5',
         'relative group',
       )}
       onDoubleClick={() => navigate(`${PATHS.dashboard}/${id}`)}

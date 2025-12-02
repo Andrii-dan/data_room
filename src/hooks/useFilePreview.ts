@@ -1,4 +1,4 @@
-import type { FileItem } from '@/lib'
+import { downloadFile, type FileItem, getFilePreviewInfo, previewFile } from '@/lib'
 
 import { useFileUrl } from './useFileUrl'
 
@@ -8,28 +8,17 @@ import { useFileUrl } from './useFileUrl'
 export function useFilePreview(fileItem: FileItem | null | undefined) {
   const fileUrl = useFileUrl(fileItem)
 
-  const previewable = fileItem
-    ? fileItem.fileType.startsWith('image/') ||
-      fileItem.fileType === 'application/pdf' ||
-      fileItem.fileType.startsWith('text/')
-    : false
+  const { previewable, icon: FileIcon, colorClass } = getFilePreviewInfo(fileItem?.fileType)
 
   const handlePreview = () => {
     if (!fileItem || !fileUrl) return
 
     if (previewable) {
-      // Open in a new tab
-      window.open(fileUrl, '_blank')
+      previewFile(fileUrl)
     } else {
-      // Trigger download
-      const a = document.createElement('a')
-      a.href = fileUrl
-      a.download = fileItem.name
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+      downloadFile(fileUrl, fileItem.name)
     }
   }
 
-  return { handlePreview, previewable, fileUrl }
+  return { handlePreview, previewable, fileUrl, FileIcon, colorClass }
 }
