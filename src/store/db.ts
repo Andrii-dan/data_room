@@ -110,3 +110,22 @@ export const renameItem = async (store: Store, id: string, newName: string) => {
   await db.put(store, updatedItem)
   return updatedItem
 }
+
+export const getFolderParents = async (folderId: string | null) => {
+  if (!folderId) return []
+
+  const db = await dbPromise
+  const breadcrumbs: FolderItem[] = []
+
+  let currentId: string | null = folderId
+
+  while (currentId) {
+    const folder: FolderItem | undefined = await db.get('folders', currentId)
+    if (!folder) break
+
+    breadcrumbs.push(folder)
+    currentId = folder.parentId
+  }
+
+  return breadcrumbs.reverse()
+}

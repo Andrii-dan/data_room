@@ -1,10 +1,11 @@
 import { useParams } from 'react-router'
-import { Home, Plus, Upload } from 'lucide-react'
+import { Plus, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { useDialog } from '@/context'
 import { cn, formatFileSize, MAX_FILE_SIZE } from '@/lib'
 
+import { Breadcrumbs } from './Breadcrumbs'
 import { CreateFolder } from './CreateFolder'
 import { UploadFile } from './upload'
 
@@ -27,8 +28,6 @@ export function ActionsPanel() {
       content: <UploadFile parentId={folderId} />,
     })
 
-  const isRootFolder = !folderId
-
   return (
     <div
       className={cn(
@@ -36,17 +35,8 @@ export function ActionsPanel() {
         'border-2 bg-slate-100/70 dark:bg-slate-700/80 rounded-md',
       )}
     >
-      {/* TODO: use actual breadcrumbs */}
-      <div className="flex items-center gap-1">
-        {isRootFolder ? (
-          <>
-            <Home className="size-4" />
-            Breadcrumbs
-          </>
-        ) : (
-          folderId
-        )}
-      </div>
+      <Breadcrumbs />
+
       <div className="flex items-center gap-3">
         <Button size="sm" variant="outline" onClick={openCreateFolderDialog}>
           New Folder <Plus />

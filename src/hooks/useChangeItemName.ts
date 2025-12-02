@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { changeItemName, dataRoomKeys } from '@/services'
 
-export function useChangeItemName(parentId: string | null) {
+export const useChangeItemName = (parentId: string | null) => {
   const qc = useQueryClient()
 
   return useMutation({

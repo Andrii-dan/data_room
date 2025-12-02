@@ -1,5 +1,6 @@
 export * from './useChangeItemName'
 export * from './useCreateFolder'
 export * from './useDeleteItem'
+export * from './useGetBreadcrumbs'
 export * from './useGetItems'
 export * from './useUploadFile'

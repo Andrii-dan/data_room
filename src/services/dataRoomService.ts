@@ -1,7 +1,7 @@
 import { mutationOptions, queryOptions } from '@tanstack/react-query'
 
 import type { Store } from '@/lib'
-import { addFile, addFolder, deleteItem, fetchItems, renameItem } from '@/store'
+import { addFile, addFolder, deleteItem, fetchItems, getFolderParents, renameItem } from '@/store'
 
 export const dataRoomKeys = {
   items: (parentId: string | null) => ['get-items', parentId],
@@ -38,4 +38,11 @@ export const changeItemName = () =>
     mutationKey: ['rename-item'],
     mutationFn: ({ store, id, newName }: { store: Store; id: string; newName: string }) =>
       renameItem(store, id, newName),
+  })
+
+export const getBreadcrumbs = (folderId: string | null = null) =>
+  queryOptions({
+    queryKey: ['get-breadcrumbs', folderId],
+    queryFn: () => getFolderParents(folderId),
+    select: (data) => (data ?? []).map(({ name, id }) => ({ name, id })),
   })
