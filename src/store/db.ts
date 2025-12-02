@@ -21,8 +21,9 @@ export const fetchItems = async (parentId: string | null = null) => {
 
   const folders: FolderItem[] = allFolders.filter((f) => f.parentId === parentId)
   const files: FileItem[] = allFiles.filter((f) => f.parentId === parentId)
+  const currentFolder: FolderItem = allFolders.find((f) => f.id === parentId)
 
-  return { folders, files }
+  return { folders, files, currentFolder }
 }
 
 export const addFolder = async (folderName: string, parentId: string | null = null) => {
