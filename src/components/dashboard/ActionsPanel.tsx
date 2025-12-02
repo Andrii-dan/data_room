@@ -17,14 +17,14 @@ export function ActionsPanel() {
     openDialog({
       title: 'Create Folder',
       description: 'Enter a name for the new folder you want to create.',
-      content: <CreateFolder />,
+      content: <CreateFolder parentId={folderId} />,
     })
 
   const openUploadFileDialog = () =>
     openDialog({
       title: 'Upload File',
       description: `Choose one or more files. Each file cannot be larger than ${formatFileSize(MAX_FILE_SIZE)}.`, // TODO: Add Description with rules
-      content: <UploadFile />,
+      content: <UploadFile parentId={folderId} />,
     })
 
   const isRootFolder = !folderId

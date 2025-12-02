@@ -1,2 +1,2 @@
 export * from './Dashboard'
-export * from './DataRoom'
+export * from './data-room'
