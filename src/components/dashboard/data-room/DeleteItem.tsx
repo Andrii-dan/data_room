@@ -30,7 +30,7 @@ export function DeleteItem({ item }: { item: FileItem | FolderItem }) {
   return (
     <div className="flex flex-col items-center gap-4">
       <span>{`Are you sure you want to delete this ${type}?`}</span>
-      <span className="text-muted-foreground font-medium">{`"${name}"`}</span>
+      <span className="text-lg font-medium">{name}</span>
       <div className="mt-2 flex justify-end gap-4">
         <Button onClick={closeDialog} variant="outline">
           Cancel <X />

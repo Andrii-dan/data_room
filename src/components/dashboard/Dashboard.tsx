@@ -9,7 +9,7 @@ export function Dashboard() {
       <Header />
       <div className="flex flex-col gap-4 p-8">
         <ActionsPanel />
-        <div className="border-2 h-[calc(100vh-200px)] bg-slate-100/70 dark:bg-slate-700/80 rounded-md overflow-y-scroll">
+        <div className="border-2 h-[calc(100vh-200px)] bg-neutral-100 dark:bg-slate-700/80 rounded-md overflow-y-scroll">
           <Outlet />
         </div>
       </div>

@@ -12,7 +12,7 @@ function App() {
   if (loading) return <Spinner fullScreen />
 
   return (
-    <div className="bg-linear-to-tr from-slate-400 dark:from-slate-900 to-slate-300 dark:to-slate-800">
+    <div className="bg-linear-to-tr from-slate-300 dark:from-slate-900 to-slate-300 dark:to-slate-800">
       <Routes>
         {/* Public Route */}
         <Route index element={!user ? <LoginPage /> : <Navigate to={PATHS.dashboard} replace />} />

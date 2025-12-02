@@ -32,7 +32,7 @@ export function ActionsPanel() {
     <div
       className={cn(
         'flex items-center justify-between gap-1 h-16 p-4',
-        'border-2 bg-slate-100/70 dark:bg-slate-700/80 rounded-md',
+        'border-2 bg-neutral-100 dark:bg-slate-700/80 rounded-md',
       )}
     >
       <Breadcrumbs />
