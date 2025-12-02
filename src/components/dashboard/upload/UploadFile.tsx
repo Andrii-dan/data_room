@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router'
 import { Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -12,14 +11,13 @@ import { InvalidFileList } from './InvalidFilesList'
 import { UploadDropzone } from './UploadDropzone'
 import { UploadFileList } from './UploadFileList'
 
-export function UploadFile() {
+export function UploadFile({ parentId = null }: { parentId?: string | null }) {
   const [files, setFiles] = useState<File[]>([])
   const [invalidFiles, setInvalidFiles] = useState<InvalidFile[]>([])
   const [isDragOver, setIsDragOver] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const { folderId: parentId } = useParams()
   const { closeDialog } = useDialog()
   const { uploadFiles, isUploading } = useUploadFile(parentId)
 

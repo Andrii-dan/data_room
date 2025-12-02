@@ -1,23 +1,21 @@
 import { useState } from 'react'
-import { useParams } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/context'
 import { useCreateFolder } from '@/hooks'
 
-export function CreateFolder() {
+export function CreateFolder({ parentId = null }: { parentId?: string | null }) {
   const [folderName, setFolderName] = useState('')
 
   const { closeDialog } = useDialog()
-  const { folderId } = useParams()
-  const { mutate, isPending } = useCreateFolder(folderId)
+  const { mutate, isPending } = useCreateFolder(parentId)
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     mutate(
-      { folderName, parentId: folderId ?? null },
+      { folderName, parentId },
       {
         onSuccess: () => {
           closeDialog()
