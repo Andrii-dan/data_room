@@ -1,9 +1,11 @@
 import { Fragment } from 'react/jsx-runtime'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
+import { useMedia } from 'react-use'
 import { Home } from 'lucide-react'
 
 import {
   Breadcrumb,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -13,16 +15,31 @@ import {
 import { useGetBreadcrumbs } from '@/hooks'
 import { PATHS } from '@/lib'
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import { TextTruncate } from '../ui/text-truncate'
+
+const MAX_CRUMBS = 4
 
 export function Breadcrumbs() {
   const { folderId } = useParams()
+  const navigate = useNavigate()
+
   const { data } = useGetBreadcrumbs(folderId)
 
   const crumbs = data ?? []
   const total = crumbs.length
 
-  // TODO: Responsive breadcrumbs
+  // If there are to many folders in the path or view port is smaller than tailwind xl breakpoint,
+  // show breadcrumbs in dropdown menu
+  const shouldCollapse = useMedia('(max-width: 1279px)') || total > MAX_CRUMBS
+
+  const middle = crumbs.slice(0, -1)
+  const current = crumbs.at(-1)
 
   return (
     <Breadcrumb>
@@ -35,26 +52,50 @@ export function Breadcrumbs() {
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+
+        {total > 0 && <BreadcrumbSeparator />}
 
         {/* Middle  */}
-        {crumbs.slice(0, -1).map(({ id, name }) => (
-          <Fragment key={id}>
+        {shouldCollapse && middle.length > 0 ? (
+          <>
             <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to={`${PATHS.dashboard}/${id}`}>
-                  <TextTruncate text={name} maxLength={20} />
-                </Link>
-              </BreadcrumbLink>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1" asChild>
+                  <BreadcrumbEllipsis className="size-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  {middle.map(({ id, name }) => (
+                    <DropdownMenuItem key={id} onClick={() => navigate(`${PATHS.dashboard}/${id}`)}>
+                      <TextTruncate text={name} />
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </BreadcrumbItem>
+
             <BreadcrumbSeparator />
-          </Fragment>
-        ))}
+          </>
+        ) : (
+          middle.map(({ id, name }) => (
+            <Fragment key={id}>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to={`${PATHS.dashboard}/${id}`}>
+                    <TextTruncate text={name} maxLength={20} />
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+            </Fragment>
+          ))
+        )}
 
         {/* Current */}
         {total > 0 && (
           <BreadcrumbItem>
-            <BreadcrumbPage>{crumbs[total - 1]?.name}</BreadcrumbPage>
+            <BreadcrumbPage>
+              <TextTruncate text={current?.name ?? ''} maxLength={30} />
+            </BreadcrumbPage>
           </BreadcrumbItem>
         )}
       </BreadcrumbList>

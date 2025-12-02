@@ -38,11 +38,13 @@ export function ActionsPanel() {
       <Breadcrumbs />
 
       <div className="flex items-center gap-3">
-        <Button size="sm" variant="outline" onClick={openCreateFolderDialog}>
-          New Folder <Plus />
+        <Button size="sm" variant="outline" onClick={openCreateFolderDialog} title="New Folder">
+          <span className="hidden sm:inline">New Folder</span>
+          <Plus />
         </Button>
-        <Button size="sm" onClick={openUploadFileDialog}>
-          Upload <Upload />
+        <Button size="sm" onClick={openUploadFileDialog} title="Upload">
+          <span className="hidden sm:inline">Upload</span>
+          <Upload />
         </Button>
       </div>
     </div>
