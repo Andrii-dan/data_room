@@ -7,6 +7,7 @@ import { cn, formatFileSize, MAX_FILE_SIZE } from '@/lib'
 
 import { Breadcrumbs } from './Breadcrumbs'
 import { CreateFolder } from './CreateFolder'
+import { SearchInput } from './SearchInput'
 import { UploadFile } from './upload'
 
 export function ActionsPanel() {
@@ -38,6 +39,7 @@ export function ActionsPanel() {
       <Breadcrumbs />
 
       <div className="flex items-center gap-3">
+        <SearchInput />
         <Button size="sm" variant="outline" onClick={openCreateFolderDialog} title="New Folder">
           <span className="hidden sm:inline">New Folder</span>
           <Plus />
