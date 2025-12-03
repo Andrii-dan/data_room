@@ -4,7 +4,15 @@ import { ChevronLeft } from 'lucide-react'
 
 import { Spinner } from '@/components/ui/spinner'
 import { useGetItems } from '@/hooks'
-import { filterAndSortItems, PATHS, setDocumentTitle } from '@/lib'
+import {
+  filterAndSortItems,
+  PATHS,
+  readFromLocalStorage,
+  setDocumentTitle,
+  type SortBy,
+  type SortOrder,
+  URL_PARAMS,
+} from '@/lib'
 
 import { FileCard } from './FileCard'
 import { FolderCard } from './FolderCard'
@@ -13,14 +21,22 @@ import { NoData } from './NoData'
 export function DataRoom() {
   const { folderId } = useParams()
   const [searchParams] = useSearchParams()
-  const searchQuery = searchParams.get('q')?.toLowerCase() || ''
+  const searchQuery = searchParams.get(URL_PARAMS.search) || ''
+
+  const sortBy = (searchParams.get(URL_PARAMS.sortBy) ||
+    readFromLocalStorage<SortBy>(URL_PARAMS.sortBy) ||
+    'name') as SortBy
+
+  const sortOrder = (searchParams.get(URL_PARAMS.sortOrder) ||
+    readFromLocalStorage<SortOrder>(URL_PARAMS.sortOrder) ||
+    'asc') as SortOrder
 
   const { isLoading, data } = useGetItems(folderId)
 
   const { folders = [], files = [], currentFolder } = data || {}
 
-  const filteredFolders = filterAndSortItems(folders, searchQuery, 'name', 'asc')
-  const filteredFiles = filterAndSortItems(files, searchQuery, 'name', 'asc')
+  const filteredFolders = filterAndSortItems(folders, searchQuery, sortBy, sortOrder)
+  const filteredFiles = filterAndSortItems(files, searchQuery, sortBy, sortOrder)
 
   useEffect(() => {
     setDocumentTitle(currentFolder?.name)

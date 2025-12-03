@@ -4,23 +4,22 @@ import { useDebounce } from 'react-use'
 import { Search, X } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
+import { URL_PARAMS } from '@/lib'
 
 import { Button } from '../ui/button'
 
-const SEARCH_PARAM = 'q'
-
 export function SearchInput() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [inputValue, setInputValue] = useState(searchParams.get(SEARCH_PARAM) || '')
+  const [inputValue, setInputValue] = useState(searchParams.get(URL_PARAMS.search) || '')
 
   useDebounce(
     () => {
       const params = new URLSearchParams(searchParams)
 
       if (inputValue.trim()) {
-        params.set(SEARCH_PARAM, inputValue)
+        params.set(URL_PARAMS.search, inputValue)
       } else {
-        params.delete(SEARCH_PARAM)
+        params.delete(URL_PARAMS.search)
       }
 
       setSearchParams(params)
@@ -30,7 +29,7 @@ export function SearchInput() {
   )
 
   const handleUrlChange = useEffectEvent(() => {
-    const next = searchParams.get(SEARCH_PARAM) || ''
+    const next = searchParams.get(URL_PARAMS.search) || ''
     if (next !== inputValue) {
       setInputValue(next)
     }
