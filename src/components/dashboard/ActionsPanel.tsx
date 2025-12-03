@@ -33,13 +33,13 @@ export function ActionsPanel() {
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-1 h-16 p-4',
-        'border-2 bg-neutral-100 dark:bg-slate-700/80 rounded-md',
+        'flex items-center justify-between flex-wrap gap-2.5 lg:h-16 p-4',
+        'border-b lg:border-2 bg-neutral-100 dark:bg-slate-700/80 lg:rounded-md',
       )}
     >
       <Breadcrumbs />
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <SortControls />
         <SearchInput />
         <Button size="sm" variant="outline" onClick={openCreateFolderDialog} title="New Folder">

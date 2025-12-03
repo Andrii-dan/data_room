@@ -15,7 +15,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'h-14 w-full p-4 px-8 flex items-center justify-between',
+        'h-14 w-full p-4 lg:px-8 flex items-center justify-between',
         'bg-linear-to-tr from-sky-700 dark:from-sky-950 to-sky-600 dark:to-sky-900 text-white',
       )}
     >

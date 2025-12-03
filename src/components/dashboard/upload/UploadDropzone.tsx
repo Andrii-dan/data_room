@@ -1,3 +1,4 @@
+import { useMedia } from 'react-use'
 import { CloudUpload } from 'lucide-react'
 
 import { cn } from '@/lib'
@@ -10,6 +11,8 @@ type Props = {
 }
 
 export function UploadDropzone({ isDragOver, inputRef, onSelectFiles, setIsDragOver }: Props) {
+  const showMobileText = useMedia('(max-width: 639px)')
+
   return (
     <div
       className={cn(
@@ -30,7 +33,11 @@ export function UploadDropzone({ isDragOver, inputRef, onSelectFiles, setIsDragO
       onDragLeave={() => setIsDragOver(false)}
     >
       <CloudUpload className="w-12 h-12 mb-2" />
-      <p>Drag & drop files here or click to select</p>
+      <p>
+        {showMobileText
+          ? 'Click here to select files'
+          : 'Drag & drop files here or click to select'}
+      </p>
 
       <input
         type="file"

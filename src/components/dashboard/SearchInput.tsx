@@ -45,7 +45,7 @@ export function SearchInput() {
         placeholder="Search..."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="h-8 pr-12"
+        className="w-30 lg:w-48 h-8 pr-12"
       />
       <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground">
         {inputValue && (
