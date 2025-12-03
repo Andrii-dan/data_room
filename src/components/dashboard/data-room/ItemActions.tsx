@@ -17,11 +17,13 @@ import { DeleteItem } from './DeleteItem'
 
 type Props = {
   item: FileItem | FolderItem
+  isOpen: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   fileUrl?: string | null
   previewable?: boolean
 }
 
-export function ItemActions({ item, fileUrl, previewable = false }: Props) {
+export function ItemActions({ item, isOpen, setIsOpen, fileUrl, previewable = false }: Props) {
   const { openDialog } = useDialog()
 
   const actions = useMemo(
@@ -63,7 +65,13 @@ export function ItemActions({ item, fileUrl, previewable = false }: Props) {
   )
 
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu
+      modal={false}
+      open={isOpen}
+      onOpenChange={(value) => {
+        setIsOpen(value)
+      }}
+    >
       <DropdownMenuTrigger asChild>
         <button
           className="absolute top-1 right-2 transition opacity-0 group-hover:opacity-100"

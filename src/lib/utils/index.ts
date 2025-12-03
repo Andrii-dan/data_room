@@ -1,6 +1,7 @@
 export * from './checkDuplicateName'
 export * from './cn'
 export * from './downloadFile'
+export * from './formatDate'
 export * from './formatFileSize'
 export * from './getFilePreviewInfo'
 export * from './getUniqueFileName'
