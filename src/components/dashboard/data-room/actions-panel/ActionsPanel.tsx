@@ -3,13 +3,13 @@ import { Plus, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { useDialog } from '@/context'
-import { cn, formatFileSize, MAX_FILE_SIZE } from '@/lib'
+import { formatFileSize, MAX_FILE_SIZE } from '@/lib'
 
-import { Breadcrumbs } from './Breadcrumbs'
 import { CreateFolder } from './CreateFolder'
 import { SearchInput } from './SearchInput'
 import { SortControls } from './SortControls'
 import { UploadFile } from './upload'
+import { ViewSwitcher } from './ViewSwitcher'
 
 export function ActionsPanel() {
   const { folderId } = useParams()
@@ -26,22 +26,18 @@ export function ActionsPanel() {
   const openUploadFileDialog = () =>
     openDialog({
       title: 'Upload File',
-      description: `Choose one or more files. Each file cannot be larger than ${formatFileSize(MAX_FILE_SIZE)}.`, // TODO: Add Description with rules
+      description: `Choose one or more files. Each file cannot be larger than ${formatFileSize(MAX_FILE_SIZE)}.`,
       content: <UploadFile parentId={folderId} />,
     })
 
   return (
-    <div
-      className={cn(
-        'flex items-center justify-between flex-wrap gap-2.5 lg:h-16 p-4',
-        'border-b lg:border-2 bg-neutral-100 dark:bg-slate-700/80 lg:rounded-md',
-      )}
-    >
-      <Breadcrumbs />
-
-      <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-3 px-4">
+      <div className="flex items-center gap-2 lg:gap-3">
+        <ViewSwitcher />
         <SortControls />
         <SearchInput />
+      </div>
+      <div className="flex items-center gap-2 lg:gap-3">
         <Button size="sm" variant="outline" onClick={openCreateFolderDialog} title="New Folder">
           <span className="hidden sm:inline">New Folder</span>
           <Plus />

@@ -2,20 +2,34 @@ import { Info } from 'lucide-react'
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { TextTruncate } from '@/components/ui/text-truncate'
-import { type FileItem, type FolderItem, formatDate, formatFileSize } from '@/lib'
+import {
+  cn,
+  type FileItem,
+  type FolderItem,
+  formatDate,
+  formatFileSize,
+  type ViewMode,
+} from '@/lib'
 
 type Props = {
   item: FolderItem | FileItem
   previewable?: boolean
+  viewMode?: ViewMode
 }
 
-export function ItemHint({ item, previewable }: Props) {
+export function ItemHint({ item, previewable, viewMode = 'grid' }: Props) {
   const isFile = item.type === 'file'
+  const isGridView = viewMode === 'grid'
 
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Info className="w-4 h-4 absolute top-2 left-2 transition opacity-0 group-hover:opacity-100 text-muted-foreground" />
+        <Info
+          className={cn(
+            'w-4 h-4 text-muted-foreground',
+            isGridView && 'absolute top-2 left-2 transition opacity-0 group-hover:opacity-100',
+          )}
+        />
       </HoverCardTrigger>
 
       <HoverCardContent

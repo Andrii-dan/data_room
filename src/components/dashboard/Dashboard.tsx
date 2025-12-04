@@ -1,15 +1,24 @@
 import { Outlet } from 'react-router'
 
-import { ActionsPanel } from './ActionsPanel'
-import { Header } from './Header'
+import { cn } from '@/lib'
+
+import { Breadcrumbs } from './Breadcrumbs'
+import { Header } from './dashboard-header'
+import { ActionsPanel } from './data-room'
 
 export function Dashboard() {
   return (
     <div className="h-screen w-screen overflow-hidden bg-pattern-dot">
       <Header />
-      <div className="flex flex-col lg:gap-4 lg:p-8">
+      <div
+        className={cn(
+          'flex flex-col gap-3 lg:gap-4 lg:m-8 bg-neutral-100 dark:bg-slate-700/80',
+          'lg:border-2 lg:rounded-md',
+        )}
+      >
+        <Breadcrumbs />
         <ActionsPanel />
-        <div className="lg:border-2 h-[calc(100vh)] lg:h-[calc(100vh-200px)] bg-neutral-100 dark:bg-slate-700/80 lg:rounded-md overflow-y-scroll">
+        <div className="h-[calc(100vh-145px)] lg:h-[calc(100vh-220px)] overflow-y-scroll">
           <Outlet />
         </div>
       </div>

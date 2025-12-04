@@ -4,4 +4,5 @@ export const URL_PARAMS = {
   search: 'q',
   sortBy: 'sortBy',
   sortOrder: 'sortOrder',
+  view: 'view',
 }

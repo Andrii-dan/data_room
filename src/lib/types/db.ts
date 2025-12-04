@@ -24,3 +24,8 @@ export interface InvalidFile {
   file: File
   reason: string
 }
+
+export interface Items {
+  folders: FolderItem[]
+  files: FileItem[]
+}

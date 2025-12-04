@@ -3,10 +3,9 @@ import { useSearchParams } from 'react-router'
 import { useDebounce } from 'react-use'
 import { Search, X } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { URL_PARAMS } from '@/lib'
-
-import { Button } from '../ui/button'
 
 export function SearchInput() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -42,6 +41,7 @@ export function SearchInput() {
   return (
     <div className="relative">
       <Input
+        name="search"
         placeholder="Search..."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

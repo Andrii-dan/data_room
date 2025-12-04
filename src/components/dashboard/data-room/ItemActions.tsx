@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { MdDriveFileRenameOutline } from 'react-icons/md'
-import { CloudDownload, Eye, MoreHorizontalIcon } from 'lucide-react'
+import { CloudDownload, Eye, MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useDialog } from '@/context'
-import { downloadFile, type FileItem, type FolderItem, previewFile } from '@/lib'
+import { cn, downloadFile, type FileItem, type FolderItem, previewFile, type ViewMode } from '@/lib'
 
 import { ChangeItemName } from './ChangeItemName'
 import { DeleteItem } from './DeleteItem'
@@ -21,9 +21,17 @@ type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   fileUrl?: string | null
   previewable?: boolean
+  viewMode?: ViewMode
 }
 
-export function ItemActions({ item, isOpen, setIsOpen, fileUrl, previewable = false }: Props) {
+export function ItemActions({
+  item,
+  isOpen,
+  setIsOpen,
+  fileUrl,
+  previewable = false,
+  viewMode = 'grid',
+}: Props) {
   const { openDialog } = useDialog()
 
   const actions = useMemo(
@@ -64,6 +72,8 @@ export function ItemActions({ item, isOpen, setIsOpen, fileUrl, previewable = fa
     [item, fileUrl, previewable, openDialog],
   )
 
+  const isGridView = viewMode === 'grid'
+
   return (
     <DropdownMenu
       modal={false}
@@ -74,13 +84,19 @@ export function ItemActions({ item, isOpen, setIsOpen, fileUrl, previewable = fa
     >
       <DropdownMenuTrigger asChild>
         <button
-          className="absolute top-1 right-2 transition opacity-0 group-hover:opacity-100"
+          className={cn(
+            isGridView && 'absolute top-1 right-2 transition opacity-0 group-hover:opacity-100',
+          )}
           onClick={(e) => e.stopPropagation()}
         >
-          <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground" />
+          {isGridView ? (
+            <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <MoreVerticalIcon className="w-5 h-5 text-muted-foreground" />
+          )}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align={isGridView ? 'start' : 'end'}>
         {actions.map(
           ({ type, icon, isVisible, onClick }) =>
             isVisible && (

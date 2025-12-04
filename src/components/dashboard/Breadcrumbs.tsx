@@ -34,21 +34,22 @@ export function Breadcrumbs() {
   const crumbs = data ?? []
   const total = crumbs.length
 
-  // If there are to many folders in the path or view port is smaller than tailwind xl breakpoint,
+  // If there are to many folders in the path or view port is smaller than tailwind sm breakpoint,
   // show breadcrumbs in dropdown menu
-  const shouldCollapse = useMedia('(max-width: 1279px)') || total > MAX_CRUMBS
+  const shouldCollapse = useMedia('(max-width: 639px)') || total > MAX_CRUMBS
 
   const middle = crumbs.slice(0, -1)
   const current = crumbs.at(-1)
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="border-b px-4 py-2">
       <BreadcrumbList>
         {/* Root  */}
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to={PATHS.dashboard}>
-              <Home className="w-4 h-4" />
+            <Link to={PATHS.dashboard} className="flex items-center gap-1">
+              <Home className="w-3 h-3" />
+              Home
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -60,7 +61,7 @@ export function Breadcrumbs() {
           <>
             <BreadcrumbItem>
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1" asChild>
+                <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer" asChild>
                   <BreadcrumbEllipsis className="size-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
