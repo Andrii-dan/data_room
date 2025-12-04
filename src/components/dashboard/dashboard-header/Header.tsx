@@ -1,6 +1,6 @@
 import { cn } from '@/lib'
 
-import { Logo } from './Logo'
+import { Logo } from '../../Logo'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { UserMenu } from './UserMenu'
 
