@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { Info } from 'lucide-react'
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { TextTruncate } from '@/components/ui/text-truncate'
+import { useTouchEvents } from '@/hooks'
 import {
   cn,
   type FileItem,
@@ -18,17 +20,30 @@ type Props = {
 }
 
 export function ItemHint({ item, previewable, viewMode = 'grid' }: Props) {
+  const [open, setOpen] = useState(false)
+
   const isFile = item.type === 'file'
   const isGridView = viewMode === 'grid'
 
+  const { isTouchDevice } = useTouchEvents({})
+
   return (
-    <HoverCard>
+    <HoverCard open={open} onOpenChange={setOpen}>
       <HoverCardTrigger asChild>
         <Info
           className={cn(
             'w-4 h-4 text-muted-foreground',
-            isGridView && 'absolute top-2 left-2 transition opacity-0 group-hover:opacity-100',
+            isGridView && !isTouchDevice && 'opacity-0',
+            isGridView && 'absolute top-2 left-2 transition group-hover:opacity-100',
           )}
+          onClick={(e) => {
+            e.stopPropagation()
+            setOpen((prev) => !prev)
+          }}
+          onPointerDown={(e) => e.stopPropagation()}
+          onPointerUp={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
         />
       </HoverCardTrigger>
 

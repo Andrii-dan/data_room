@@ -12,7 +12,7 @@ interface Props extends Items {
 
 export function ListView({ folders, files, currentFolder }: Props) {
   return (
-    <div className="flex flex-col gap-2 mt-2">
+    <div className="flex flex-col gap-2 pt-2 pb-6">
       {currentFolder && (
         <Link
           className="flex items-center h-10 p-1 px-2 hover:bg-accent rounded-md hover:outline hoveroutline-dotted"

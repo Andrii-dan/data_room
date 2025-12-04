@@ -18,7 +18,7 @@ export function Dashboard() {
       >
         <Breadcrumbs />
         <ActionsPanel />
-        <div className="h-[calc(100vh-145px)] lg:h-[calc(100vh-220px)] overflow-y-scroll">
+        <div className="h-[calc(100vh-148px)] lg:h-[calc(100vh-220px)] overflow-y-scroll">
           <Outlet />
         </div>
       </div>

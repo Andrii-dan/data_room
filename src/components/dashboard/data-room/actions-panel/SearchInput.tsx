@@ -42,17 +42,17 @@ export function SearchInput() {
     <div className="relative">
       <Input
         name="search"
-        placeholder="Search..."
+        placeholder="Search"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="w-30 lg:w-48 h-8 pr-12"
+        className="w-26 md:w-48 h-8 pr-6 md:pr-12"
       />
       <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground">
         {inputValue && (
           <Button
             variant="ghost"
             onClick={() => setInputValue('')}
-            className="w-4 h-4 flex items-center justify-center"
+            className="hidden md:flex w-4 h-4  items-center justify-center"
           >
             <X className="w-4 h-4" />
           </Button>

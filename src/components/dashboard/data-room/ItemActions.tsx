@@ -103,7 +103,14 @@ export function ItemActions({
               <DropdownMenuItem
                 key={type}
                 className="flex items-center cursor-pointer"
-                onClick={onClick}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClick()
+                }}
+                onPointerDown={(e) => e.stopPropagation()}
+                onPointerUp={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
               >
                 {icon}
                 <span>{type}</span>
