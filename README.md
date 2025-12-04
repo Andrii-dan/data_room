@@ -1,3 +1,12 @@
+# Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure (High-Level Overview)](#project-structure-high-level-overview)
+- [Architectural Notes](#architectural-notes)
+- [Setup & Installation](#setup--installation)
+
 # Overview
 
 **Data Room** is a virtual document management application inspired by platforms like Google Drive and Dropbox.  
