@@ -76,13 +76,15 @@ export function ItemHint({ item, previewable, viewMode = 'grid' }: Props) {
           <span className="text-muted-foreground">{formatDate(item.updatedAt)}</span>
         </div>
 
-        <p className="mt-4 text-xs">
-          {isFile
-            ? previewable
-              ? 'Double click to preview this file in a new tab'
-              : 'Double click to download this file'
-            : 'Double click to open.'}
-        </p>
+        {!isTouchDevice && (
+          <p className="mt-4 text-xs">
+            {isFile
+              ? previewable
+                ? 'Double click to preview this file in a new tab'
+                : 'Double click to download this file'
+              : 'Double click to open.'}
+          </p>
+        )}
       </HoverCardContent>
     </HoverCard>
   )
