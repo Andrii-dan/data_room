@@ -124,7 +124,7 @@ This project uses a modern, production-ready frontend stack optimized for perfor
 - **shadcn/ui** components (Radix-based)
 - **lucide-react** and **React-icons** for icons
 - **clsx** and **tailwind-merge** for class handling
-- **tw-animate-css** for subtle motion
+- **Motion** for items animation
 
 ### 🔐 Authentication
 - **Supabase JS** – Google login and session handling
