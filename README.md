@@ -70,6 +70,7 @@ Available at the top of each folder view:
 - **View Switcher** – toggle between **grid** and **list** views  
 - **Sorting Controls** – sort by:
   - Name
+  - Size (for files only)
   - Date created
   - Date updated
 - **Sort Order** – ascending / descending
