@@ -62,7 +62,7 @@ export function DataRoom() {
       {isEmpty ? (
         <NoData search={!!searchQuery} />
       ) : viewMode === 'grid' ? (
-        <GridView folders={filteredFolders} files={filteredFiles} />
+        <GridView folders={filteredFolders} files={filteredFiles} currentFolder={currentFolder} />
       ) : (
         <ListView folders={filteredFolders} files={filteredFiles} currentFolder={currentFolder} />
       )}
