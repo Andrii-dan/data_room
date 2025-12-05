@@ -58,7 +58,7 @@ export function DataRoom() {
   const isEmpty = !filteredFolders.length && !filteredFiles.length
 
   return (
-    <div className="h-full px-4 pt-2 pb-6">
+    <div className="h-full px-4">
       {isEmpty ? (
         <NoData search={!!searchQuery} />
       ) : viewMode === 'grid' ? (
