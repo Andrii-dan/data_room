@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 import type { AuthContextType } from '@/lib'
 import { supabase } from '@/lib/supabaseClient'
@@ -14,6 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true)
       await supabase.auth.signOut()
     } catch (err) {
+      toast.error('Something went wrong while logging out. Please try again.')
       console.error('Logout failed:', err)
     } finally {
       setLoading(false)
