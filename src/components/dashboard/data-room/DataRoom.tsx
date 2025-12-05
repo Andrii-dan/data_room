@@ -16,6 +16,7 @@ import {
 
 import { GridView } from './grid-view'
 import { ListView } from './list-view'
+import { NavigateBack } from './NavigateBack'
 import { NoData } from './NoData'
 
 export function DataRoom() {
@@ -58,13 +59,14 @@ export function DataRoom() {
   const isEmpty = !filteredFolders.length && !filteredFiles.length
 
   return (
-    <div className="h-full px-4">
+    <div className="flex flex-col h-full px-4 py-1 gap-1">
+      <NavigateBack currentFolder={currentFolder} variant={viewMode} />
       {isEmpty ? (
         <NoData search={!!searchQuery} />
       ) : viewMode === 'grid' ? (
-        <GridView folders={filteredFolders} files={filteredFiles} currentFolder={currentFolder} />
+        <GridView folders={filteredFolders} files={filteredFiles} />
       ) : (
-        <ListView folders={filteredFolders} files={filteredFiles} currentFolder={currentFolder} />
+        <ListView folders={filteredFolders} files={filteredFiles} />
       )}
     </div>
   )

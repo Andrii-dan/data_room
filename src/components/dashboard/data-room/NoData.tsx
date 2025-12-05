@@ -8,7 +8,7 @@ type Props = {
 
 export function NoData({ search = false }: Props) {
   return (
-    <Empty className="w-full h-full">
+    <Empty className="flex-1">
       <EmptyHeader>
         <EmptyMedia>
           {search ? (
