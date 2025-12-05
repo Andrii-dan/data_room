@@ -82,7 +82,38 @@ export const addFile = async (file: File, parentId: string | null = null) => {
 export const deleteItem = async (store: Store, id: string) => {
   await simulateDelay()
   const db = await dbPromise
-  await db.delete(store, id)
+
+  if (store === 'files') {
+    await db.delete('files', id)
+    return
+  }
+
+  // If it's a folder recursively delete all nested items
+  const allFolders: FolderItem[] = await db.getAll('folders')
+  const allFiles: FileItem[] = await db.getAll('files')
+
+  // Collect all descendant folder IDs
+  const collectFolderTree = (folderId: string): string[] => {
+    const childFolders = allFolders.filter((f) => f.parentId === folderId)
+    const childIds = childFolders.map((c) => c.id)
+
+    // recursively collect descendants
+    const deeper = childIds.flatMap((childId) => collectFolderTree(childId))
+
+    return [folderId, ...deeper]
+  }
+
+  const foldersToDelete = collectFolderTree(id)
+
+  // Delete all files inside those folders
+  const fileDeletes = allFiles
+    .filter((file) => foldersToDelete.includes(file.parentId ?? ''))
+    .map((file) => db.delete('files', file.id))
+
+  // Delete all folders (children → parent last)
+  const folderDeletes = foldersToDelete.map((folderId) => db.delete('folders', folderId))
+
+  await Promise.all([...fileDeletes, ...folderDeletes])
 }
 
 export const renameItem = async (store: Store, id: string, newName: string) => {
