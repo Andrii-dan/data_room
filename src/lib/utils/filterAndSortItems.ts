@@ -39,6 +39,17 @@ export function filterAndSortItems<T extends FileItem | FolderItem>(
         valA = a.updatedAt
         valB = b.updatedAt
         break
+      case 'size':
+        // If both are files → compare sizes
+        if (a.type === 'file' && b.type === 'file') {
+          valA = a.file.size
+          valB = b.file.size
+        } else {
+          // One or both are folders → keep their relative order unchanged
+          // by returning 0 (no reordering)
+          return 0
+        }
+        break
     }
 
     if (valA < valB) return order === 'asc' ? -1 : 1

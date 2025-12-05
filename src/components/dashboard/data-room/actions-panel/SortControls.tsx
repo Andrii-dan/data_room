@@ -50,6 +50,9 @@ export function SortControls() {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="name">Name</SelectItem>
+          <SelectItem value="size" title="Size sorting applies to files only">
+            Size
+          </SelectItem>
           <SelectItem value="createdAt">Created At</SelectItem>
           <SelectItem value="updatedAt">Updated At</SelectItem>
         </SelectContent>
