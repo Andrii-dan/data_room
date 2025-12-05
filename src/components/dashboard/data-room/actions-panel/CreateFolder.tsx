@@ -1,16 +1,12 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDialog } from '@/context'
 import { useCreateFolder } from '@/hooks'
-import { PATHS } from '@/lib'
 
 export function CreateFolder({ parentId = null }: { parentId?: string | null }) {
   const [folderName, setFolderName] = useState('')
-
-  const navigate = useNavigate()
 
   const { closeDialog } = useDialog()
   const { mutate, isPending } = useCreateFolder(parentId)
@@ -21,10 +17,9 @@ export function CreateFolder({ parentId = null }: { parentId?: string | null }) 
     mutate(
       { folderName, parentId },
       {
-        onSuccess: ({ id }) => {
+        onSuccess: () => {
           closeDialog()
           setFolderName('')
-          if (id) navigate(`${PATHS.dashboard}/${id}`)
         },
       },
     )
